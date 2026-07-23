@@ -16,8 +16,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-      with:
-        path: DinoFinder
 
     - uses: actions/checkout@v4
       with:
@@ -35,24 +33,22 @@ jobs:
         cmake --build build --config Release
 
     - name: Configure DinoFinder
-      run: cmake -B DinoFinder/build -S DinoFinder -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
+      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
 
     - name: Build DinoFinder
-      run: cmake --build DinoFinder/build --config Release
+      run: cmake --build build --config Release
 
     - name: Upload Windows DLL
       uses: actions/upload-artifact@v4
       with:
         name: DinoFinder-Windows
-        path: DinoFinder/build/bin/DinoFinder.dll
+        path: build/bin/DinoFinder.dll
         retention-days: 30
 
   build-linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      with:
-        path: DinoFinder
 
     - uses: actions/checkout@v4
       with:
@@ -70,14 +66,14 @@ jobs:
         cmake --build build --config Release
 
     - name: Configure DinoFinder
-      run: cmake -B DinoFinder/build -S DinoFinder -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
+      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
 
     - name: Build DinoFinder
-      run: cmake --build DinoFinder/build --config Release
+      run: cmake --build build --config Release
 
     - name: Upload Linux SO
       uses: actions/upload-artifact@v4
       with:
         name: DinoFinder-Linux
-        path: DinoFinder/build/bin/libDinoFinder.so
+        path: build/bin/libDinoFinder.so
         retention-days: 30
