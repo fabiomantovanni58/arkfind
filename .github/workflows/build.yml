@@ -23,16 +23,21 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --global url."https://github.com/".insteadOf "https://github.com/"
         git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
 
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Configure CMake
-      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+    - name: Build ArkApi
+      run: |
+        cd ../ArkApi
+        cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+        cmake --build build --config Release
 
-    - name: Build
+    - name: Configure DinoFinder
+      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/../ArkApi"
+
+    - name: Build DinoFinder
       run: cmake --build build --config Release
 
     - name: Upload Windows DLL
@@ -56,13 +61,18 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --global url."https://github.com/".insteadOf "https://github.com/"
         git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
 
-    - name: Configure CMake
-      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+    - name: Build ArkApi
+      run: |
+        cd ../ArkApi
+        cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+        cmake --build build --config Release
 
-    - name: Build
+    - name: Configure DinoFinder
+      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/../ArkApi"
+
+    - name: Build DinoFinder
       run: cmake --build build --config Release
 
     - name: Upload Linux SO
