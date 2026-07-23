@@ -23,9 +23,10 @@ if(NOT EXISTS "${ARKAPI_PATH}")
     message(FATAL_ERROR "ArkApi não encontrado em ${ARKAPI_PATH}. Clone o repositório ArkApi primeiro.")
 endif()
 
-# Incluir ArkApi
-include_directories("${ARKAPI_PATH}/include")
-include_directories("${ARKAPI_PATH}/src")
+# Incluir ArkApi - usando estrutura do OxygenMod
+include_directories("${ARKAPI_PATH}/Oxygen/API")
+include_directories("${ARKAPI_PATH}/Oxygen/Core")
+include_directories("${ARKAPI_PATH}/Oxygen/SDK")
 
 # Arquivos do plugin
 set(SOURCES
