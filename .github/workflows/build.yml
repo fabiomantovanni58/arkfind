@@ -17,34 +17,34 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        submodules: recursive
+        path: DinoFinder
 
-    - name: Clone ArkApi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
+    - uses: actions/checkout@v4
+      with:
+        repository: ArkApi/ArkApi
+        path: ArkApi
+        fetch-depth: 1
 
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
 
     - name: Build ArkApi
+      working-directory: ArkApi
       run: |
-        cd ../ArkApi
         cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
         cmake --build build --config Release
 
     - name: Configure DinoFinder
-      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/../ArkApi"
+      run: cmake -B DinoFinder/build -S DinoFinder -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
 
     - name: Build DinoFinder
-      run: cmake --build build --config Release
+      run: cmake --build DinoFinder/build --config Release
 
     - name: Upload Windows DLL
       uses: actions/upload-artifact@v4
       with:
         name: DinoFinder-Windows
-        path: build/bin/DinoFinder.dll
+        path: DinoFinder/build/bin/DinoFinder.dll
         retention-days: 30
 
   build-linux:
@@ -52,32 +52,32 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        submodules: recursive
+        path: DinoFinder
+
+    - uses: actions/checkout@v4
+      with:
+        repository: ArkApi/ArkApi
+        path: ArkApi
+        fetch-depth: 1
 
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ make
 
-    - name: Clone ArkApi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
-
     - name: Build ArkApi
+      working-directory: ArkApi
       run: |
-        cd ../ArkApi
         cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
         cmake --build build --config Release
 
     - name: Configure DinoFinder
-      run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/../ArkApi"
+      run: cmake -B DinoFinder/build -S DinoFinder -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
 
     - name: Build DinoFinder
-      run: cmake --build build --config Release
+      run: cmake --build DinoFinder/build --config Release
 
     - name: Upload Linux SO
       uses: actions/upload-artifact@v4
       with:
         name: DinoFinder-Linux
-        path: build/bin/libDinoFinder.so
+        path: DinoFinder/build/bin/libDinoFinder.so
         retention-days: 30
