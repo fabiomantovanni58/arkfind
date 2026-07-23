@@ -1,0 +1,30 @@
+# ArkApi compiled binaries
+build/
+bin/
+*.dll
+*.so
+*.lib
+*.a
+*.obj
+*.o
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
