@@ -22,11 +22,9 @@ jobs:
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Clone ArkApi
+    - name: Clone ArkApi (OxygenMod)
       run: |
-        git clone https://github.com/ArkApi/ArkApi.git ArkApi
-        cd ArkApi
-        git submodule update --init --recursive
+        git clone --depth 1 https://github.com/OxygenMod/Oxygen.git ArkApi
 
     - name: Configure CMake
       run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
@@ -51,11 +49,9 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ make
 
-    - name: Clone ArkApi
+    - name: Clone ArkApi (OxygenMod)
       run: |
-        git clone https://github.com/ArkApi/ArkApi.git ArkApi
-        cd ArkApi
-        git submodule update --init --recursive
+        git clone --depth 1 https://github.com/OxygenMod/Oxygen.git ArkApi
 
     - name: Configure CMake
       run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
