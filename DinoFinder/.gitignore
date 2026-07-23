@@ -1,0 +1,23 @@
+# ArkAPI Headers (submódulo ou clone manual)
+../ArkApi
+
+# UE4 Headers (dependência externa)
+../UE4Headers
+
+# Build directory
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled binaries (keep in repo for releases only)
+*.dll
+*.so
+*.dylib
