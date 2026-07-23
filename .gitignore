@@ -1,30 +1,22 @@
-# ArkApi compiled binaries
-build/
-bin/
-*.dll
-*.so
-*.lib
-*.a
-*.obj
-*.o
+```
+# Temporary files
+*.tmp
+*.temp
 
-# IDE files
-.vscode/
-.idea/
-*.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# CMake
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-Makefile
-
-# OS files
-.DS_Store
-Thumbs.db
+# Environment files
+.env
+.env.local
+*.env.*
 
 # Logs
 *.log
+
+# Backup files
+*~
+*.bak
+*.backup
+
+# OS generated files
+.DS_Store
+Thumbs.db
+```
