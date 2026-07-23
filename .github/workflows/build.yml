@@ -16,26 +16,22 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-
-    - uses: actions/checkout@v4
       with:
-        repository: ArkApi/ArkApi
-        path: ArkApi
-        fetch-depth: 1
+        fetch-depth: 0
 
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Build ArkApi
-      working-directory: ArkApi
+    - name: Clone ArkApi
       run: |
-        cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
-        cmake --build build --config Release
+        git clone https://github.com/ArkApi/ArkApi.git ArkApi
+        cd ArkApi
+        git submodule update --init --recursive
 
-    - name: Configure DinoFinder
+    - name: Configure CMake
       run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
 
-    - name: Build DinoFinder
+    - name: Build
       run: cmake --build build --config Release
 
     - name: Upload Windows DLL
@@ -49,26 +45,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-
-    - uses: actions/checkout@v4
       with:
-        repository: ArkApi/ArkApi
-        path: ArkApi
-        fetch-depth: 1
+        fetch-depth: 0
 
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cmake g++ make
 
-    - name: Build ArkApi
-      working-directory: ArkApi
+    - name: Clone ArkApi
       run: |
-        cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
-        cmake --build build --config Release
+        git clone https://github.com/ArkApi/ArkApi.git ArkApi
+        cd ArkApi
+        git submodule update --init --recursive
 
-    - name: Configure DinoFinder
+    - name: Configure CMake
       run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DARKAPI_PATH="${{ github.workspace }}/ArkApi"
 
-    - name: Build DinoFinder
+    - name: Build
       run: cmake --build build --config Release
 
     - name: Upload Linux SO
