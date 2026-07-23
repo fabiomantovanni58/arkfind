@@ -20,7 +20,11 @@ jobs:
         submodules: recursive
 
     - name: Clone ArkApi
-      run: git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global url."https://github.com/".insteadOf "https://github.com/"
+        git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
 
     - name: Setup MSVC
       uses: ilammy/msvc-dev-cmd@v1
@@ -49,7 +53,11 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y cmake g++ make
 
     - name: Clone ArkApi
-      run: git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global url."https://github.com/".insteadOf "https://github.com/"
+        git clone --depth 1 https://github.com/ArkApi/ArkApi.git ../ArkApi
 
     - name: Configure CMake
       run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
